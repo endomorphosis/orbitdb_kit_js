@@ -5,6 +5,8 @@ setup(
 	version='0.0.1',
 	packages=[
 		'orbitdb_kit',
+        'orbitdb_kit.websocket_kit',
+        'orbitdb_kit.config',
 	],
 	install_requires=[
 		'datasets',

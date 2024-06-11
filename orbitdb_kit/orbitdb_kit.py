@@ -4,12 +4,11 @@ import subprocess as process
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import websockets as ws 
 import asyncio
-from config import config
 import json
 from .websocket_kit import WebSocketClient as WebSocketClient
 import datetime
 import time
-from orbitdb_kit import orbitdb_kit 
+from orbitdb_kit import orbitdb_kit , orbitdb_kit_lib
 
 class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
@@ -459,6 +458,7 @@ class orbitdb_kit:
         await orbitdb_kit.connect_orbitdb()
     
 if __name__ == '__main__':
+    from config import config
     resources = {}
     meta = {}
     orbitdb_kit = orbitdb_kit(resources, meta)
