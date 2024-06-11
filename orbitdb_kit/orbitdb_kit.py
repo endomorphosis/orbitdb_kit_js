@@ -8,6 +8,7 @@ import json
 from websocket_kit import WebSocketClient as WebSocketClient
 import datetime
 import time
+from config import config
 
 class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
@@ -457,7 +458,6 @@ class orbitdb_kit:
         await orbitdb_kit.connect_orbitdb()
     
 if __name__ == '__main__':
-    from config import config
     resources = {}
     meta = {}
     orbitdb_kit = orbitdb_kit(resources, meta)
