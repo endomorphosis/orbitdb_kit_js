@@ -1,9 +1,18 @@
 import websocket
 import json
 from urllib.parse import urlencode
+import _thread
+import time
+import rel
 
 class WebSocketClient:
 	def __init__(self, master_url, meta):
+
+		if master_url is None:
+			raise ValueError('master_url is required')
+		else:
+			self.master_url = master_url
+		self.state = {'status': 'disconnected'}
 		if meta is None:
 			meta = {}
 			self.on_open = self.on_open
@@ -27,36 +36,57 @@ class WebSocketClient:
 				self.on_close = self.on_close
 			else:
 				self.on_close = meta['on_close']
-		self.ws = websocket.WebSocketApp(
-			master_url,
-			on_open=self.on_open,
-			on_message=self.on_message,
-			on_error=self.on_error,
-			on_close=self.on_close,
-		).run_forever(
-			ping_interval=5,
-			ping_timeout=2
-		)
+
+	def run_once(self):
+		while True:
+			try:
+				self.ws = websocket.create_connection(self.master_url)
+			except Exception as e:
+				print(e)	
+		return True
+
+	def run_forever(self):
+		print('connecting to master')
 		self.state = {
-	        'status': 'disconnected'
-        }
+			'status': 'disconnected'
+		}
 
-	print('connecting to master')
-
-	def connect(self, master_url, meta):
-
-		self.ws = websocket.WebSocketApp(
-			master_url,
-			on_open=self.on_open,
-			on_message=self.on_message,
-			on_error=self.on_error,
-			on_close=self.on_close,
-		)
-	
-	def subscribe(self):
+		self.ws.run_forever(dispatcher=rel, reconnect=5)  # Set dispatcher to automatic reconnection, 5 second reconnect delay if connection closed unexpectedly
+		rel.signal(2, rel.abort)  # Keyboard Interrupt
+		rel.dispatch()
 		self.ws.run_forever(
 			ping_interval=5,
 			ping_timeout=2
+		)
+		
+		return True
+	
+	def close(self):
+		self.ws.close()
+		return True
+
+	def run_forever(self, master_url, interval=15, timeout=2):
+		this_master_url = None
+		if master_url is None and self.master_url is None:
+			raise ValueError('master_url is required')
+		else:
+			if master_url is not None:
+				this_master_url = master_url
+			elif self.master_url is not None:
+				this_master_url = self.master_url
+			else:
+				raise ValueError('master_url is required')
+			
+		self.ws = websocket.WebSocketApp(
+			this_master_url,
+			on_open=self.on_open,
+			on_message=self.on_message,
+			on_error=self.on_error,
+			on_close=self.on_close,
+		)
+		self.ws.run_forever(
+			ping_interval=interval,
+			ping_timeout=timeout
 		)
 
 	def set_handlers(self, **handlers):
@@ -64,13 +94,15 @@ class WebSocketClient:
 		
 	def send(self, message):
 		self.ws.send(json.dumps(message))
+
+	def recv(self):
+		results = self.ws.recv()
+		print(results)
+		return results
 		
 	def on_open(self, ws):
 		print('connection accepted')
-		self.send({
-			'event': 'init',
-			'status': self.state['status']
-		})
+		self.send({'peers': 'ls'})
 
 	def on_close(self, ws, code, message):
 		print('lost connection to master')
@@ -93,7 +125,28 @@ class WebSocketClient:
 			print(e)
 			pass
 
+	def create_connection(self):
+		self.ws = websocket.create_connection("ws://echo.websocket.events/")
+		return True
+
+	def test_run_forever(self):
+		results = self.run_forever(self.master_url)
+		print(results)
+		return True
+
+	def test_run_once(self):
+		self.run_once()
+		self.send(json.load({'peers': 'ls'}))
+		self.recv()
+		return True
+ 
+	def log_message(self, message):
+		# NOTE this is a placeholder for a logging function, to try to traceback errors
+		print(message)
+		return True
 
 if __name__ == '__main__':
 	client = WebSocketClient('ws://127.0.0.1:50001', {})
+	# test = client.test_run_once()
+	test = client.test_run_forever()
 	# subscribe = client.subscribe()

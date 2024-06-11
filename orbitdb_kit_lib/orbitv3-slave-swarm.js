@@ -194,6 +194,7 @@ async function run(options) {
         console.log('connected', event.detail)
     })
 
+    const wss = new WebSocketServer({ port: port });
 
     orbitdb = await createOrbitDB({ipfs: ipfs, identities, id: id, directory: `./orbitdb/`+id})
 
@@ -225,11 +226,15 @@ async function run(options) {
         }
     })
     console.info(`${new Date().toISOString()}running with db address ${db.address}`)
-    const wss = new WebSocketServer({ port: port });
     wss.on('connection', (ws) => {
         const ip = ws._socket.remoteAddress;
         if (ip === '127.0.0.1' || ip === '::ffff:127.0.0.1') {
             console.log('New WebSocket connection');
+            // let peers_list = []
+            // for(let peer of ipfs.libp2p.peerStore.store.datastore.data){
+            //     peers_list.push(peer[0])
+            // }
+            // ws.send(JSON.stringify({ "peers": peers_list }));
             ws.on('message', (message) => {
                 message = JSON.parse(message.toString());
                 console.log('Received message:', message);
@@ -265,13 +270,12 @@ async function run(options) {
                         let peers_time = {}
                         for (let peer of peers_ls) {
                             let begin = Date.now();
-                            console.log('Pinging peer:', peer[0]);
+                            //console.log('Pinging peer:', peer[0]);
                             peers_list.push(peer[0]);
                             let end = Date.now();
                             peers_time[peer[0]] = end - begin;
                         }
-
-                        console.log('Peers:', peers_list);
+                        //console.log('Peers:', peers_list);
                         ws.send(JSON.stringify({ "peers": peers_list }));
                         break;
 
@@ -354,7 +358,7 @@ async function run(options) {
                         // Handle select all logic
                         let select_all_docs = db.all().then((docs) => {
                             console.log('Selected all documents:', docs);
-                            ws.send(JSON.stringify({'select_all': docs}));
+                             ws.send(JSON.stringify({'select_all': docs}));
                         }).catch((error) => {
                             console.error(json.stringify({ 'error' : { 'Error selecting all documents' : { 'error' : error }}}));
                             ws.send(json.stringify({ 'error' : { 'Error selecting all documents' : { 'error' : error }}}));

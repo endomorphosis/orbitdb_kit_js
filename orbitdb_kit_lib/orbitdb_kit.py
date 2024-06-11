@@ -26,6 +26,7 @@ class orbitdb_kit():
         self.key_list = []
         self.key_hash_dict = {}
         self.orbitdb = []
+        self.peers = []
         self.ws = None
         self.url = None
         self.orbitdb_args['ipaddress'] = None
@@ -117,8 +118,8 @@ class orbitdb_kit():
         # start_orbitdb = process.Popen(start_cmd, shell=True)
         # start_orbitdb = process.run(start_cmd, stdout=process.PIPE, stderr=process.PIPE)
         # pause for 5 seconds to allow orbitdb to start
-        asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
-        asyncio.get_event_loop().run_until_complete(self.connect_orbitdb())
+        # asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
+        # asyncio.get_event_loop().run_until_complete(self.connect_orbitdb())
         return start_orbitdb
         pass
 
@@ -145,14 +146,31 @@ class orbitdb_kit():
                 }
             )
             return self.ws
+        
+    async def run_forever(self):
+        self.ws.run_forever()
+        self.state = {
+            'status': 'disconnected'
+        }
+        print('connecting to master')
+        return True
     
+    async def run_once(self):
+        await self.start_orbitdb()
+        await self.ws.run_once()
+        return True
+    
+    async def disconnect_orbitdb(self):
+        if self.ws is not None:
+            self.ws.close()
+            return True
+        pass
+
     def on_pong_message(self, ws, message):
         self.pong = message['pong']
-        pass
 
     def on_ping_message(self, ws, recv):
         self.ping = recv['ping']
-        pass
 
     def on_peers_message(self, ws, recv):
         self.peers = recv['peers']
@@ -262,7 +280,7 @@ class orbitdb_kit():
         return self.orbitdb
 
     def on_message(self, ws, message):
-        # print(f"Received message: message = '{message}')")
+        print(f"Received message in: message = '{message}')")
         recv = json.loads(message)
         results = ""
 
@@ -340,9 +358,9 @@ class orbitdb_kit():
             raise Exception("data must be a dictionary")
         if len(data_keys) != 1:
             raise Exception("data must have exactly one key")
-        ws.send(json.dumps({
+        results = ws.send({
             'insert': data
-        }))
+        })
         return True
     
     def update_request(self, ws, data):
@@ -373,10 +391,11 @@ class orbitdb_kit():
         return True
     
     def on_open(self, ws, callback_fn = None):
+
         print('connection accepted')
         print("url", self.url)
-        peers = self.peers_ls_request(ws)
-        select_all = self.select_all_request(ws)
+        # peers = self.peers_ls_request(ws)
+        # select_all = self.select_all_request(ws)
         # insert = self.insert_request(ws, {"test": "test document"})
         # update = self.update_request(ws, {"test": "update document"})
         # select = self.select_request(ws, "test")
