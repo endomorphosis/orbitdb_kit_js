@@ -5,10 +5,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import websockets as ws 
 import asyncio
 import json
-from .websocket_kit import WebSocketClient as WebSocketClient
+from websocket_kit import WebSocketClient as WebSocketClient
 import datetime
 import time
-from orbitdb_kit import orbitdb_kit , orbitdb_kit_lib
 
 class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
