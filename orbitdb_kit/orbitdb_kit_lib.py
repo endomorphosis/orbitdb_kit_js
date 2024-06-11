@@ -10,7 +10,7 @@ from .websocket_kit import WebSocketClient as WebSocketClient
 import datetime
 import time
 
-class orbitdb_kit():
+class orbitdb_kit_lib():
     def __init__(self,  resources=None, meta=None):
         self.resources = resources
         self.meta = meta
