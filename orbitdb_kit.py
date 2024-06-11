@@ -21,6 +21,9 @@ import urllib3
 import shutil
 import subprocess
 parent_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent_dir)
+orbitdb_kit_dir = os.path.join(os.path.dirname(__file__), 'orbitdb_kit')
+sys.path.append(orbitdb_kit_dir)
 from orbitdb_kit import orbitdb_kit_lib
 
 class orbitdb_kit:
