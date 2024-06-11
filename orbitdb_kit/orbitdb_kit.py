@@ -9,6 +9,7 @@ import json
 from .websocket_kit import WebSocketClient as WebSocketClient
 import datetime
 import time
+from orbitdb_kit import orbitdb_kit 
 
 class orbitdb_kit():
     def __init__(self,  resources=None, meta=None):
