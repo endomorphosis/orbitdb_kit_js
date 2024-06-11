@@ -11,7 +11,7 @@ import datetime
 import time
 from orbitdb_kit import orbitdb_kit 
 
-class orbitdb_kit():
+class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
         self.resources = resources
         self.meta = meta
