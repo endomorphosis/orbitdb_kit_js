@@ -1,7 +1,7 @@
 {
-  "name": "agwp2pdb",
+  "name": "@endomorphosis/orbitdb_kit",
   "version": "1.0.0",
-  "description": "AGW P2P distributed database",
+  "description": "P2P distributed database",
   "main": "orbit.js",
   "type": "module",
   "scripts": {
@@ -12,8 +12,8 @@
     "P2P",
     "orbit"
   ],
-  "author": "Karsten Ohme",
-  "license": "UNLICENSED",
+  "author": "Benjamin Barber",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "@chainsafe/libp2p-gossipsub": "^11.1.0",
     "@chainsafe/libp2p-noise": "^15.0.0",
