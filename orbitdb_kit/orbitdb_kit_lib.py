@@ -4,7 +4,7 @@ import subprocess as process
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import websockets as ws 
 import asyncio
-from config import config
+from .config import config
 import json
 from .websocket_kit import websocket_kit as websocket_kit
 import datetime

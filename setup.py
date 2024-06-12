@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name='orbitdb_kit',
-	version='0.0.2',
+	version='0.0.3',
 	packages=[
 		'orbitdb_kit',
         'orbitdb_kit.websocket_kit',
