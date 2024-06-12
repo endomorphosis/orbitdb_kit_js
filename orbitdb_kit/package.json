@@ -35,7 +35,6 @@
     "uuid": "^9.0.1",
     "@libp2p/floodsub": "^9.0.12",
     "@libp2p/pubsub-peer-discovery": "^4.0.0",
-    "multiaddr": "^9.0.0",
-    "@multiformats/multiaddr": "^9.0.0"
+    "@multiformats/multiaddr": "^12.3.0"
   }
 }
