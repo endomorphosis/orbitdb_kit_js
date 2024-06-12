@@ -95,5 +95,5 @@ class websocket_kit:
 
 
 if __name__ == '__main__':
-	client = WebSocketClient('ws://127.0.0.1:50001', {})
+	client = websocket_kit('ws://127.0.0.1:50001', {})
 	# subscribe = client.subscribe()
