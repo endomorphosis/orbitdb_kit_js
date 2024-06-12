@@ -6,7 +6,7 @@ import websockets as ws
 import asyncio
 from config import config
 import json
-from .websocket_kit import WebSocketClient as WebSocketClient
+from .websocket_kit import websocket_kit as websocket_kit
 import datetime
 import time
 
@@ -127,7 +127,7 @@ class orbitdb_kit_lib():
         self.url = 'ws://' + self.orbitdb_args['ipaddress'] + ':' + str(self.orbitdb_args['port'])
 
         if (callback_fn is not None) and (callable(callback_fn)):
-            self.ws = WebSocketClient(self.url, 
+            self.ws = websocket_kit(self.url, 
                 {
                 "on_open" : self.on_open(callback_fn),
                 "on_message" : self.on_message,
@@ -137,7 +137,7 @@ class orbitdb_kit_lib():
             )
             return self.ws
         else:
-            self.ws = WebSocketClient(self.url, 
+            self.ws = websocket_kit(self.url, 
                 {
                 "on_open" : self.on_open,
                 "on_message" : self.on_message,
