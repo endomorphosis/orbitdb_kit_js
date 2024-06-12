@@ -26,7 +26,6 @@ import { webRTC } from '@libp2p/webrtc';
 import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
 import { all } from '@libp2p/websockets/filters'
 import { ping } from '@libp2p/ping'
-import { multiaddr } from 'multiaddr'
 
 const require = createRequire(import.meta.url);
 let bootstrappers = [
