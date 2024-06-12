@@ -2,7 +2,7 @@ import websocket
 import json
 from urllib.parse import urlencode
 
-class websocket_kit:
+class websocket_kit_lib:
 	def __init__(self, master_url, meta):
 		if meta is None:
 			meta = {}

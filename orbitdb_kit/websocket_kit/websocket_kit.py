@@ -5,7 +5,7 @@ import _thread
 import time
 import rel
 
-class WebSocketClient:
+class websocket_kit:
 	def __init__(self, master_url, meta):
 
 		if master_url is None:
@@ -146,7 +146,7 @@ class WebSocketClient:
 		return True
 
 if __name__ == '__main__':
-	client = WebSocketClient('ws://127.0.0.1:50001', {})
+	client = websocket_kit('ws://127.0.0.1:50001', {})
 	# test = client.test_run_once()
 	test = client.test_run_forever()
 	# subscribe = client.subscribe()

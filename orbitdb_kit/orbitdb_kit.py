@@ -5,10 +5,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import websockets as ws 
 import asyncio
 import json
-from websocket_kit import WebSocketClient as WebSocketClient
+from .websocket_kit import websocket_kit as websocket_kit
 import datetime
 import time
-from config import config
+config_path = os.path.join(os.path.dirname(__file__), 'config')
+print(config_path)
+sys.path.append(os.path.join(os.path.dirname(__file__),'config'))
+from .config import config
 
 class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
