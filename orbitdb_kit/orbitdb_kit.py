@@ -106,6 +106,10 @@ class orbitdb_kit:
             self.orbitdb_args['port'] = 50001
         pass
 
+        if ("node_modules" not in os.listdir(self.this_dir)):
+            os.system('cd ' + self.this_dir + ' && npm install')
+            pass
+
     def start_orbitdb(self , args = None):
         start_args = self.orbitdb_args
         if args is not None:
@@ -117,9 +121,10 @@ class orbitdb_kit:
         start_cmd = 'node ' + os.path.join(self.this_dir, 'orbitv3-slave-swarm.js') + ' ' + start_argstring  
         print(start_cmd)
         start_cmd = start_cmd.split(' ')
-        start_orbitdb = process.Popen(start_cmd)
+        # start_orbitdb = process.Popen(start_cmd)
         # start_orbitdb = process.Popen(start_cmd, shell=True)
-        # start_orbitdb = process.run(start_cmd, stdout=process.PIPE, stderr=process.PIPE)
+        start_orbitdb = process.call(start_cmd)
+        # start_orbitdb = process.run(start_cmd, stdout=process.DEVNULL, stderr=process.DEVNULL)
         # pause for 5 seconds to allow orbitdb to start
         # asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
         # asyncio.get_event_loop().run_until_complete(self.connect_orbitdb())
