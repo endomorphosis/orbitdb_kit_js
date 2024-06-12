@@ -14,5 +14,13 @@ setup(
 		'requests',
 		'boto3',
         'toml',
-	]
+	],
+    package_data={
+        'orbitdb_kit': [
+            'orbitv3-slave-swarm.js',
+        	'package.json',
+            'yarn.lock'
+        ]
+    },
+	include_package_data=True,
 )
