@@ -5,13 +5,20 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import websockets as ws 
 import asyncio
 import json
-from .websocket_kit import websocket_kit as websocket_kit
 import datetime
 import time
 config_path = os.path.join(os.path.dirname(__file__), 'config')
 print(config_path)
 sys.path.append(os.path.join(os.path.dirname(__file__),'config'))
-from .config import config
+try:
+    from .config import config
+except:
+    from config import config
+
+try:
+    from .websocket_kit import websocket_kit as websocket_kit
+except:
+    from websocket_kit import websocket_kit as websocket_kit
 
 class orbitdb_kit:
     def __init__(self,  resources=None, meta=None):
@@ -122,14 +129,13 @@ class orbitdb_kit:
         print(start_cmd)
         start_cmd = start_cmd.split(' ')
         # start_orbitdb = process.Popen(start_cmd)
-        # start_orbitdb = process.Popen(start_cmd, shell=True)
-        start_orbitdb = process.call(start_cmd)
+        start_orbitdb = process.Popen(start_cmd)
+        # start_orbitdb = process.call(start_cmd)
         # start_orbitdb = process.run(start_cmd, stdout=process.DEVNULL, stderr=process.DEVNULL)
         # pause for 5 seconds to allow orbitdb to start
         # asyncio.get_event_loop().run_until_complete(asyncio.sleep(5))
         # asyncio.get_event_loop().run_until_complete(self.connect_orbitdb())
-        return start_orbitdb
-        pass
+        return True
 
     async def connect_orbitdb(self, callback_fn = None):
         self.url = 'ws://' + self.orbitdb_args['ipaddress'] + ':' + str(self.orbitdb_args['port'])
@@ -465,10 +471,10 @@ class orbitdb_kit:
         print("websocket client test()")
         await orbitdb_kit.connect_orbitdb()
     
-if __name__ == '__main__':
-    resources = {}
-    meta = {}
-    orbitdb_kit = orbitdb_kit(resources, meta)
-    results = asyncio.run(orbitdb_kit.test())
-    print("done")
+# if __name__ == '__main__':
+#     resources = {}
+#     meta = {}
+#     orbitdb_kit = orbitdb_kit(resources, meta)
+#     results = asyncio.run(orbitdb_kit.test())
+#     print("done")
 
