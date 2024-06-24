@@ -457,10 +457,10 @@ class orbitdb_kit_lib():
         print("websocket client test()")
         await orbitdb_kit.connect_orbitdb()
     
-if __name__ == '__main__':
-    resources = {}
-    meta = {}
-    orbitdb_kit = orbitdb_kit(resources, meta)
-    results = asyncio.run(orbitdb_kit.test())
-    print("done")
+# if __name__ == '__main__':
+#     resources = {}
+#     meta = {}
+#     orbitdb_kit = orbitdb_kit(resources, meta)
+#     results = asyncio.run(orbitdb_kit.test())
+#     print("done")
 
