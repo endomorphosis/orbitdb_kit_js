@@ -1,10 +1,10 @@
 {
   "name": "orbitdb_kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This Repository is meant to bridge python to an orbitdb instance running in nodejs. The orbitdb instance is also hosting a websocket server, and the python library uses its websocket connection to sync data to / from the orbitdb instance.",
   "main": "orbitdb_kit.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": " node tests/test.js"
   },
   "repository": {
     "type": "git",
