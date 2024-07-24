@@ -224,7 +224,7 @@ async function run(options) {
             }
         }
     })
-    console.info(`${new Date().toISOString()}running with db address ${db.address}`)
+    console.info(`${new Date().toISOString()} running with db address ${db.address}`)
     wss.on('connection', (ws) => {
         const ip = ws._socket.remoteAddress;
         if (ip === '127.0.0.1' || ip === '::ffff:127.0.0.1') {
