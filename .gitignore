@@ -8,3 +8,5 @@ config/config.toml
 config/__pycache__/
 config/__pycache__
 __pycache__
+build/
+dist/
