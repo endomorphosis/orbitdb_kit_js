@@ -9,4 +9,6 @@ config/__pycache__/
 config/__pycache__
 __pycache__
 build/
+orbitdb/
 dist/
+node_modules/
