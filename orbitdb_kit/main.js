@@ -2,7 +2,7 @@ import libp2pKit from './libp2p_kit.js'
 import orbitdbKit from './orbitdb_kit.js'
 import websocketKit from './websocket_kit.js'
 
-export class Main {
+export class orbitDBKitJs {
     constructor() {
         this.libp2pKit = new libp2pKit()
         this.websocketKit = new websocketKit()
