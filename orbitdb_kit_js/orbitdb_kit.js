@@ -1,14 +1,18 @@
-import libp2pKit from './libp2p_kit.js'
 
-
-export class OrbitDBKit {
-    constructor(ipfs, orbitdb) {
-        this.ipfs = ipfs
-        this.orbitdb = orbitdb
+export class orbitDbKitJs {
+    constructor(resources, metadata) {
+        this.resources = resources
+        this.metadata = metadata
     }
 
-    async init() {    
+    async init(libp2pKit, ipfsKit) {    
+        this.ipfsKit = ipfsKit
+        this.libp2pKit = libp2pKit
+    }
 
+    async test() {
+        console.log('OrbitDbKit test')
+        throw new Error('OrbitDbKit test not implemented')
     }
 
     async createDB(dbName, dbType) {
@@ -21,4 +25,4 @@ export class OrbitDBKit {
         return db
     }
 }
-
+export default orbitDbKitJs
