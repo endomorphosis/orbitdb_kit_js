@@ -1,7 +1,7 @@
 import { orbitDbKitJs } from "../orbitdb_kit_js/orbitdb_kit.js"
 import { libp2pKit } from "libp2p_kit_js";
 import { ipfsKitJs } from 'ipfs_kit_js'
-import { ipfsKitCjs } from 'ipfs_kit_cjs'
+// import { ipfsKitCjs } from 'ipfs_kit_cjs'
 import { requireConfig } from "../config/config.js";
 import path from "path";
 import fs from "fs";
@@ -14,7 +14,7 @@ export class test_orbitdb_kit_js {
         this.imports = {};
         this.config = requireConfig();
         this.libp2pKit = new libp2pKit(resources, metadata);
-        this.ipfsKitCjs = new ipfsKitCjs(resources, metadata);
+        // this.ipfsKitCjs = new ipfsKitCjs(resources, metadata);
         this.ipfsKitJs = new ipfsKitJs(resources, metadata);
         this.orbitDbKitJs = new orbitDbKitJs(resources, metadata);
 
