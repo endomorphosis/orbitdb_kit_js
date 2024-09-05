@@ -1,6 +1,6 @@
 {
     "name": "orbitdb_kit_js",
-    "version": "1.0.15",
+    "version": "1.0.17",
     "description": "Manages multiple orbitdb instances",
     "type": "module",
     "main": "index.js",

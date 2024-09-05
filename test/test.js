@@ -38,7 +38,7 @@ if (import.meta.url === 'file://' + process.argv[1]) {
     console.log("Running test");
     let test_results = {};
     try{
-        const testLibp2pKitJs = new test_libp2p_kit_js();
+        const testLibp2pKitJs = new test_orbitdb_kit_js();
         await testLibp2pKitJs.init().then((init) => {
             test_results.init = init;
             console.log("testIpfsModelManager init: ", init);
