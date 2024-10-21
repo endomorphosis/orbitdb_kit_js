@@ -33,7 +33,8 @@
     "pvutils": "^1.1.3",
     "tar": "^7.4.3",
     "uint8arrays": "5.1.0",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "libp2p_kit_js": "^1.0.37"
   },
   "scripts": {
     "test": " node tests/test.js"

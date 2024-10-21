@@ -30,7 +30,8 @@ export class orbitDbKitJs {
 			peers: [],
 			peerHandlers: [],
 			messageHistory: [],
-			libp2p: null
+			libp2p: null,
+            dbname: null
 		}
     }
 
@@ -70,6 +71,12 @@ export class orbitDbKitJs {
             else{
                 this.ctx.messageHistory = []
             }
+            if (this.config.dbname){
+                this.ctx.dbname = this.config.dbname
+            }
+            else{
+                this.ctx.dbname = "test"
+            }
             await this.libp2pKit.init(this.ctx);
             // this.ctx.libp2p = await createLibp2p({
             //     peerId: this.ctx.config.identityKey
@@ -106,23 +113,34 @@ export class orbitDbKitJs {
             }
             if (!this.ctx.messageHistory){
                 this.ctx.messageHistory = []
+            }
+            if (!this.ctx.dbname){
+                this.ctx.dbname = "test"
             }            
             await this.libp2pKit.init(this.ctx);
         }
 
 
-
-        this.blockstore = new LevelBlockstore(`./ipfs/`+id+`/blocks`);
-        this.datastore = new LevelDatastore(`./ipfs/`+id+`/datastore`);
-        this.ipfs = await createHelia({blockstore: this.blockstore, libp2p: this.libp2p, datastore: this.datastore, blockBrokers: [bitswap()]})
-        this.identities = await Identities({ ipfs, path: `./orbitdb/`+id+`/identities` })
-        this.identity = await this.identities.createIdentity({ id })
-        this.orbitdb = await createOrbitDB(this.ipfs, { identity: this.identity, accessController: OrbitDBAccessController })
-        this.db = await orbitdb.open(swarmName+"-"+index+"-of-"+chunkSize,
+        let blockstore = new LevelBlockstore(`./ipfs/`+id+`/blocks`);
+        this.blockstore = blockstore;
+        let datastore = new LevelDatastore(`./ipfs/`+id+`/datastore`);
+        this.datastore = datastore;
+        let ipfs = await createHelia({blockstore: blockstore, libp2p: this.ctx.libp2p, datastore: datastore, blockBrokers: [bitswap()]})
+        this.ipfs = ipfs
+        let identities = await Identities({ ipfs, path: `./orbitdb/`+id+`/identities` })
+        this.identities = identities
+        let identity = await identities.createIdentity({ id })
+        this.identity = identity
+        let orbitdb = await createOrbitDB({ipfs: ipfs, identities, id: id, directory: `./orbitdb/`+id})
+        this.orbitdb = orbitdb 
+        // this.orbitdb = await createOrbitDB(ipfs, { identity: identity, accessController: OrbitDBAccessController })
+        let db = await orbitdb.open(this.ctx.dbname,
             {type: 'documents',
                 AccessController: OrbitDBAccessController({ write: ["*"], sync: false}),
             })
+        this.db = db
         let oldHeads = await db.log.heads()
+        this.oldHeads = oldHeads
     }
 
     async close() {

@@ -12,3 +12,4 @@ build/
 orbitdb/
 dist/
 node_modules/
+ipfs/
