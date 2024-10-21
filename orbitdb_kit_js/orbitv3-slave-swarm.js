@@ -8,7 +8,7 @@ import {bitswap} from '@helia/block-brokers'
 import {tcp} from '@libp2p/tcp'
 import {mdns} from '@libp2p/mdns'
 import process from 'node:process'
-import {LevelBlockstore} from 'blockstore-level'
+import { LevelBlockstore } from 'blockstore-level'
 import { LevelDatastore } from "datastore-level";
 import { createRequire } from "module";
 import { WebSocketServer } from 'ws'
