@@ -1,6 +1,6 @@
 {
     "name": "orbitdb_kit_js",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "description": "Manages multiple orbitdb instances",
     "type": "module",
     "main": "index.js",
@@ -8,7 +8,7 @@
         "@mwni/toml": "^1.0.0",
         "ipfs_kit_cjs": "^1.0.0",
         "ipfs_kit_js": "^1.0.24",
-        "libp2p_kit_js": "^1.0.19",
+        "libp2p_kit_js": "^1.0.32",
         "tar": "^7.4.3",
         "util": "^0.12.5"
     },
