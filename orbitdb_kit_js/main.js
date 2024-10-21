@@ -5,6 +5,9 @@ import { createHelia } from 'helia';
 import { bitswap } from '@helia/block-brokers'
 import { createOrbitDB, Identities, OrbitDBAccessController } from '@orbitdb/core'
 import { EventEmitter } from "events";
+import asn1js from "asn1js";
+import pvtsutils from "pvtsutils";
+import pvutils from "pvutils";
 
 export class orbitDbKitJs {
     constructor( resources, metadata) {

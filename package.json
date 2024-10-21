@@ -6,9 +6,10 @@
     "main": "index.js",
     "dependencies": {
         "@mwni/toml": "^1.0.0",
+        "asn1js": "^3.0.5",
         "ipfs_kit_cjs": "^1.0.0",
         "ipfs_kit_js": "^1.0.24",
-        "libp2p_kit_js": "^1.0.32",
+        "libp2p_kit_js": "^1.0.33",
         "tar": "^7.4.3",
         "util": "^0.12.5"
     },
