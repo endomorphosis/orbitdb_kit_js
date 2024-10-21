@@ -7,25 +7,30 @@ import {gossipsub} from '@chainsafe/libp2p-gossipsub'
 import {bitswap} from '@helia/block-brokers'
 import {tcp} from '@libp2p/tcp'
 import {mdns} from '@libp2p/mdns'
+import { webSockets } from '@libp2p/websockets';
+import { noise } from '@chainsafe/libp2p-noise'
+import { yamux } from '@chainsafe/libp2p-yamux'
+import { bootstrap } from '@libp2p/bootstrap'
+import { floodsub } from '@libp2p/floodsub'
+import { kadDHT, removePublicAddressesMapper } from '@libp2p/kad-dht'
+import { peerIdFromString } from '@libp2p/peer-id'
+import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery'
+import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
+import { all } from '@libp2p/websockets/filters'
+import { ping } from '@libp2p/ping'
+import { webRTC } from '@libp2p/webrtc';
+
+
 import process from 'node:process'
 import { LevelBlockstore } from 'blockstore-level'
 import { LevelDatastore } from "datastore-level";
 import { createRequire } from "module";
 import { WebSocketServer } from 'ws'
-import { noise } from '@chainsafe/libp2p-noise'
-import { yamux } from '@chainsafe/libp2p-yamux'
-import { bootstrap } from '@libp2p/bootstrap'
-import { floodsub } from '@libp2p/floodsub'
+
 import { mplex } from '@libp2p/mplex'
-import { kadDHT, removePublicAddressesMapper } from '@libp2p/kad-dht'
-import { peerIdFromString } from '@libp2p/peer-id'
-import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery'
+
 import { WebSocket } from 'ws';
-import { webSockets } from '@libp2p/websockets';
-import { webRTC } from '@libp2p/webrtc';
-import { circuitRelayTransport } from '@libp2p/circuit-relay-v2'
-import { all } from '@libp2p/websockets/filters'
-import { ping } from '@libp2p/ping'
+
 
 const require = createRequire(import.meta.url);
 let bootstrappers = [
