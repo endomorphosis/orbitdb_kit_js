@@ -8,6 +8,8 @@ import { EventEmitter } from "events";
 import asn1js from "asn1js";
 import pvtsutils from "pvtsutils";
 import pvutils from "pvutils";
+import { requireConfig } from '../config/config.js';
+import { randomInt } from 'crypto';
 
 export class orbitDbKitJs {
     constructor( resources, metadata) {
@@ -19,6 +21,7 @@ export class orbitDbKitJs {
         this.identity = null;
         this.orbitdb = null;
         this.db = null;
+        this.config = requireConfig();
         this.ctx = {
 			config: {
 				identityKey: null,
@@ -32,12 +35,83 @@ export class orbitDbKitJs {
     }
 
     async init(ctx) {
+        let id = randomInt(1000000)
         if (!ctx){
+            if (!this.config){
+                this.config = requireConfig();
+            }
+            if (this.config.identityKey){
+                this.ctx.config.identityKey = this.config.identityKey;
+            }
+            else{
+                this.ctx.config.identityKey = null;
+            }
+            if (this.config.listen){
+                this.ctx.config.listen = this.config.listen
+            }
+            else{
+                this.ctx.config.listen = ["/ip4/0.0.0.0/tcp/0"]
+            }
+            if (this.config.peers){
+                this.ctx.peers = this.config.peers
+            }
+            else{
+                this.ctx.peers = []
+            }
+            if (this.config.peerHandlers){
+                this.ctx.peerHandlers = this.config.peerHandlers
+            }
+            else{
+                this.ctx.peerHandlers = []
+            }
+            if (this.config.messageHistory){
+                this.ctx.messageHistory = this.config.messageHistory
+            }
+            else{
+                this.ctx.messageHistory = []
+            }
             await this.libp2pKit.init(this.ctx);
+            // this.ctx.libp2p = await createLibp2p({
+            //     peerId: this.ctx.config.identityKey
+            //         ? await createFromPrivKey(deriveKeyPair(this.ctx.config.identityKey))
+            //         : undefined,
+            //     addresses: {
+            //         listen: this.ctx.config.listen
+            //     },
+            //     transports: [
+            //         tcp(),
+            //         webSockets()
+            //     ],
+            //     streamMuxers: [
+            //         mplex()
+            //     ],
+            //     connectionEncryption: [
+            //         noise()
+            //     ]
+            // })
         }
         else{
-            await this.libp2pKit.init(ctx);
+            this.ctx = ctx;
+            if (!this.ctx.config.identityKey){
+                this.ctx.config.identityKey = null;
+            }
+            if (!this.ctx.config.listen){
+                this.ctx.config.listen = "/ip4/0.0.0.0/tcp/0"
+            }
+            if (!this.ctx.peers){
+                this.ctx.peers = []
+            }
+            if (!this.ctx.peerHandlers){
+                this.ctx.peerHandlers = []
+            }
+            if (!this.ctx.messageHistory){
+                this.ctx.messageHistory = []
+            }            
+            await this.libp2pKit.init(this.ctx);
         }
+
+
+
         this.blockstore = new LevelBlockstore(`./ipfs/`+id+`/blocks`);
         this.datastore = new LevelDatastore(`./ipfs/`+id+`/datastore`);
         this.ipfs = await createHelia({blockstore: this.blockstore, libp2p: this.libp2p, datastore: this.datastore, blockBrokers: [bitswap()]})
