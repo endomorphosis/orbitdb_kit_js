@@ -19,10 +19,25 @@ export class orbitDbKitJs {
         this.identity = null;
         this.orbitdb = null;
         this.db = null;
+        this.ctx = {
+			config: {
+				identityKey: null,
+				listen: null
+			},
+			peers: [],
+			peerHandlers: [],
+			messageHistory: [],
+			libp2p: null
+		}
     }
 
-    async init(id) {
-        await this.libp2pKit.init();
+    async init(ctx) {
+        if (!ctx){
+            await this.libp2pKit.init(this.ctx);
+        }
+        else{
+            await this.libp2pKit.init(ctx);
+        }
         this.blockstore = new LevelBlockstore(`./ipfs/`+id+`/blocks`);
         this.datastore = new LevelDatastore(`./ipfs/`+id+`/datastore`);
         this.ipfs = await createHelia({blockstore: this.blockstore, libp2p: this.libp2p, datastore: this.datastore, blockBrokers: [bitswap()]})
@@ -47,6 +62,11 @@ export class orbitDbKitJs {
         await this.orbitdb.stop()
         await this.ipfs.stop()
         process.exit();
+    }
+    
+    async test() {
+        console.log('OrbitDbKit test')
+        // throw new Error('OrbitDbKit test not implemented')
     }
 }
 
