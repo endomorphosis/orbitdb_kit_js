@@ -5,6 +5,9 @@
     "type": "module",
     "main": "index.js",
     "dependencies": {
+        "@chainsafe/libp2p-gossipsub": "^14.1.0",
+        "@libp2p/floodsub": "^10.1.7",
+        "@libp2p/pubsub-peer-discovery": "^11.0.0",
         "@mwni/toml": "^1.0.0",
         "asn1js": "^3.0.5",
         "ipfs_kit_cjs": "^1.0.0",
