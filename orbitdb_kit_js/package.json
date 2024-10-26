@@ -34,7 +34,7 @@
     "tar": "^7.4.3",
     "uint8arrays": "5.1.0",
     "util": "^0.12.5",
-    "libp2p_kit_js": "^1.0.37"
+    "libp2p_kit_js": "^1.0.43"
   },
   "scripts": {
     "test": " node tests/test.js"
